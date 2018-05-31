@@ -1,11 +1,4 @@
-/* 
-	I've created a function here that is a simple d3 chart.
-	This could be anthing that has discrete steps, as simple as changing
-	the background color, or playing/pausing a video.
-	The important part is that it exposes and update function that
-	calls a new thing on a scroll trigger.
-*/
-window.createGraphic = function (graphicSelector) {
+window.createGraphic = function () {
 
     // actions to take on each step of our scroll-driven story
     var steps = [
@@ -46,15 +39,8 @@ window.createGraphic = function (graphicSelector) {
         steps[step].call()
     }
 
-    // function moveMap(lat, lng){
-    //     var latLng = new google.maps.LatLng(lat, lng);
-    //     map.setZoom(16);
-    //     map.panTo(latLng);
-    //     map.setZoom(18);
-    // }
 
     function init() {
-        // setupCharts()
         update(0)
     }
 

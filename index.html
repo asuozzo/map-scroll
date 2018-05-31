@@ -49,11 +49,11 @@
 
     </div>
     <div class='library'>
-        <h2 class='library__hed'>
-            <a target='_blank' href='https://github.com/sjwilliams/scrollstory'>ScrollStory</a>
-        </h2>
-        <div class='library__graphic graphic'>
-            <div class='graphic__prose'>
+        <div class='scroll-container'>
+            <div class='scroll-map'>
+                <div id="map"></div>
+            </div>
+            <div class='scroll-text'>
                 <div class='trigger' data-step='0'>
                     <h2>Oakledge</h2>
                     <p>this will scroll</p>
@@ -118,9 +118,6 @@
                     <p>this will scroll</p>
                 </div>
             </div>
-            <div class='graphic__vis'>
-                <div id="map"></div>
-            </div>
         </div>
     </div>
     <div>
@@ -156,15 +153,15 @@
 
         function scrollstory() {
             // select elements using jQuery since it is a dependency
-            var $graphicEl = $('.graphic')
-            var $graphicVisEl = $graphicEl.find('.graphic__vis')
+            var $graphicEl = $('.scroll-container')
+            var $graphicVisEl = $graphicEl.find('.scroll-map')
 
             // viewport height
             var viewportHeight = window.innerHeight
             var halfViewportHeight = Math.floor(viewportHeight / 2)
 
             // a global function creates and handles all the vis + updates
-            var graphic = createGraphic('.graphic')
+            var graphic = createGraphic()
 
             // handle the fixed/static position of grahpic
             var toggle = function (fixed, bottom) {

@@ -1,20 +1,20 @@
 /* GRAPHIC CODE */
 
-.graphic {
+.scroll-container {
     width: 100%;
     position: relative;
 }
 
-.graphic__prose {
+.scroll-text {
     width: 50%;
 }
 
-.graphic__prose .trigger {
+.scroll-text .trigger {
     padding: 0;
     margin: 0;
 }
 
-.graphic__vis {
+.scroll-map {
     position: absolute;
     top: 0;
     margin-left: 50%;
@@ -23,22 +23,48 @@
     transform: translate3d(0, 0, 0);
     height: 100vh;
     width:50%;
+    z-index:100;
 }
 
 #map {
-    height:100vh;
+    height:100%;
     width:100%;
+    z-index:1000;
 }
 
-.graphic__vis.is-fixed {
+.scroll-map.is-fixed {
     position: fixed;
 }
 
-.graphic__vis.is-bottom {
+.scroll-map.is-bottom {
     top: auto;
     bottom: 0;
 }
 
 .library {
     width:100%;
+}
+
+@media only screen and (max-width: 600px) {
+    .scroll-map {
+        position:relative;
+        top:0;
+        height:33vh;
+        width:100%;
+        margin-left:0;
+        margin-right:0;
+    }
+    .scroll-map.is-fixed,
+    .scroll-map.is-bottom {
+        position: -webkit-sticky;
+        position: -moz-sticky;
+        position: -o-sticky;
+        position: -ms-sticky;
+        position: sticky;
+        top:0;
+    }
+
+    .scroll-text {
+        padding-top:15px;
+    }
 }

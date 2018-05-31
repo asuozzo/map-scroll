@@ -17,10 +17,7 @@
 .scroll-map {
     position: absolute;
     top: 0;
-    margin-left: 50%;
-    -webkit-transform: translate3d(0, 0, 0);
-    -moz-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
+    right:0;
     height: 100vh;
     width:50%;
     z-index:100;
@@ -33,7 +30,11 @@
 }
 
 .scroll-map.is-fixed {
-    position: fixed;
+    position: sticky;
+    right:0;
+    top:0;
+    float:right;
+    margin-left:0;
 }
 
 .scroll-map.is-bottom {

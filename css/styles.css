@@ -15,9 +15,10 @@
 }
 
 .scroll-map {
-    position: absolute;
+    position: sticky;
     top: 0;
     right:0;
+    float:right;
     height: 100vh;
     width:50%;
     z-index:100;
@@ -29,43 +30,26 @@
     z-index:1000;
 }
 
-.scroll-map.is-fixed {
-    position: sticky;
-    right:0;
-    top:0;
-    float:right;
-    margin-left:0;
-}
-
-.scroll-map.is-bottom {
-    top: auto;
-    bottom: 0;
-}
-
 .library {
     width:100%;
 }
 
 @media only screen and (max-width: 600px) {
     .scroll-map {
-        position:relative;
-        top:0;
-        height:33vh;
-        width:100%;
-        margin-left:0;
-        margin-right:0;
-    }
-    .scroll-map.is-fixed,
-    .scroll-map.is-bottom {
         position: -webkit-sticky;
         position: -moz-sticky;
         position: -o-sticky;
         position: -ms-sticky;
         position: sticky;
         top:0;
+        height:33vh;
+        width:100%;
+        margin-left:0;
+        margin-right:0;
     }
 
     .scroll-text {
+        width:100%;
         padding-top:15px;
     }
 }

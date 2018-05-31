@@ -5,16 +5,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/styles.css" />
-    <script src="js/script.js"></script>
+
     <script src="https://code.jquery.com/jquery-1.7.1.min.js" integrity="sha256-iBcUE/x23aI6syuqF7EeT/+JFBxjPs5zeFJEXxumwb0="
         crossorigin="anonymous"></script>
+
+    
+    <link rel="stylesheet" type="text/css" media="screen" href="css/styles.css" />
     <script src="js/scrollstory.min.js"></script>
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.js'></script>
+
+    <!-- <script src="/general/multimedia/projects/map-scroll/js/scrollstory.min.js"></script> -->
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="/general/multimedia/projects/map-scroll/css/styles.css" /> -->
+
+    
+        <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.css' rel='stylesheet' />
 </head>
 <body>
-    <div>
+        <div>
         <p>I love wafer I love cake gummies gummi bears I love I love. Dragée gingerbread pastry bonbon icing oat cake wafer icing. Jujubes pudding topping chocolate I love halvah tiramisu cheesecake.</p>
 
         <p>Candy croissant I love gummies I love bear claw I love. Icing macaroon bonbon cheesecake. Bonbon sesame snaps sweet roll dragée caramels candy canes ice cream.</p>
@@ -44,8 +51,6 @@
         <p>Sweet roll croissant jelly-o brownie dragée tiramisu candy canes liquorice. Gummies tart gingerbread chocolate cake chocolate cake dragée biscuit apple pie dragée. Jelly-o toffee I love lemon drops macaroon jelly-o. Carrot cake soufflé jelly oat cake cotton candy cookie.</p>
 
         <p>Powder apple pie gummies croissant muffin pudding bonbon cake chocolate. Caramels cake donut marshmallow. Pudding sugar plum chupa chups. Sweet roll pie I love muffin croissant.</p>
-
-
 
     </div>
     <div class='library'>
@@ -133,6 +138,46 @@
     </div>
 
 <script>
+
+        var createGraphic = function () {
+    var steps = [
+        function step0() {
+            map.flyTo({
+                center: [
+                    -73.226732, 44.455984
+                ],
+                zoom: 16
+            })
+        },
+
+        function step1() {
+            map.flyTo({
+                center: [
+                    -73.224055,
+                    44.482168
+                ]
+            })
+        },
+
+        function step2() {
+            map.flyTo({
+                center: [
+                    -73.240330,
+                    44.492861
+                ]
+            })
+        },
+    ]
+
+    // update our chart
+    function update(step) {
+        steps[step].call()
+    }
+
+    return {
+        update: update,
+    }
+}
     mapboxgl.accessToken = 'pk.eyJ1Ijoic2V2ZW5kYXlzIiwiYSI6ImNqaHRhOTFvcjBibjYzd280YXJmcW1zODEifQ.UB4MJkUMxA-M41CKQdv_JQ';
     var map = new mapboxgl.Map({
         container: 'map', // container id
@@ -153,7 +198,7 @@
 
         function scrollstory() {
             // select elements using jQuery since it is a dependency
-            var $graphicEl = $('.scroll-container')
+            var $graphicEl = jQuery('.scroll-container')
             var $graphicVisEl = $graphicEl.find('.scroll-map')
 
             // viewport height
@@ -163,39 +208,10 @@
             // a global function creates and handles all the vis + updates
             var graphic = createGraphic()
 
-            // handle the fixed/static position of grahpic
-            var toggle = function (fixed, bottom) {
-                if (fixed) $graphicVisEl.addClass('is-fixed')
-                else $graphicVisEl.removeClass('is-fixed')
-
-                if (bottom) $graphicVisEl.addClass('is-bottom')
-                else $graphicVisEl.removeClass('is-bottom')
-            }
-
             // callback function when scrollStory detects item to trigger
             var handleItemFocus = function (event, item) {
                 var step = item.data.step
                 graphic.update(step)
-            }
-
-            // callback on scrollStory scroll event
-            // toggle fixed position
-            var handleContainerScroll = function (event) {
-                var bottom = false
-                var fixed = false
-
-                var bb = $graphicEl[0].getBoundingClientRect()
-                var bottomFromTop = bb.bottom - viewportHeight
-
-                if (bb.top < 0 && bottomFromTop > 0) {
-                    bottom = false
-                    fixed = true
-                } else if (bb.top < 0 && bottomFromTop < 0) {
-                    bottom = true
-                    fixed = false
-                }
-
-                toggle(fixed, bottom)
             }
 
             // instantiate scrollStory
@@ -203,7 +219,6 @@
                 contentSelector: '.trigger',
                 triggerOffset: halfViewportHeight,
                 itemfocus: handleItemFocus,
-                containerscroll: handleContainerScroll,
             })
         }
 

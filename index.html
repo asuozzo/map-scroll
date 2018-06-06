@@ -17,7 +17,7 @@
     <!-- <link rel="stylesheet" type="text/css" media="screen" href="/general/multimedia/projects/map-scroll/css/styles.css" /> -->
 
     
-        <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.js'></script>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.css' rel='stylesheet' />
 </head>
 <body>
@@ -53,13 +53,13 @@
         <p>Powder apple pie gummies croissant muffin pudding bonbon cake chocolate. Caramels cake donut marshmallow. Pudding sugar plum chupa chups. Sweet roll pie I love muffin croissant.</p>
 
     </div>
-    <div class='library'>
+    <div class='embed-max-width'>
         <div class='scroll-container'>
             <div class='scroll-map'>
                 <div id="map"></div>
             </div>
             <div class='scroll-text'>
-                <div class='trigger' data-step='0'>
+                    <div class='trigger' data-slug="oakledge">
                     <h2>Oakledge</h2>
                     <p>this will scroll</p>
                     <p>this will scroll</p>
@@ -80,7 +80,7 @@
                     <p>this will scroll</p>
                     <p>this will scroll</p>
                 </div>
-                <div class='trigger' data-step='1'>
+                <div class='trigger' data-slug="moran">
                     <h2>Moran</h2>
                     <p>this will scroll</p>
                     <p>this will scroll</p>
@@ -101,7 +101,7 @@
                     <p>this will scroll</p>
                     <p>this will scroll</p>
                 </div>
-                <div class='trigger' data-step='2'>
+                <div class='trigger' data-slug="north-beach">
                     <h2>North Beach</h2>
                     <p>this will scroll</p>
                     <p>this will scroll</p>
@@ -139,45 +139,37 @@
 
 <script>
 
-        var createGraphic = function () {
-    var steps = [
-        function step0() {
-            map.flyTo({
-                center: [
-                    -73.226732, 44.455984
-                ],
-                zoom: 16
-            })
+    var points = {
+        "north-beach": {
+            coordinates: [-73.240330, 44.492861],
+            title: 'North Beach',
+            number:1,
+            zoom: 16
         },
-
-        function step1() {
-            map.flyTo({
-                center: [
-                    -73.224055,
-                    44.482168
-                ]
-            })
+        "moran": {
+            coordinates: [-73.224055, 44.482168],
+            title: 'Moran Plant',
+            number:2,
+            zoom: 16
         },
+        "oakledge": {
+            coordinates: [-73.22671, 44.45595],
+            title: 'Oakledge Park',
+            number:3,
+            zoom: 16
+        }
+    };
 
-        function step2() {
-            map.flyTo({
-                center: [
-                    -73.240330,
-                    44.492861
-                ]
-            })
-        },
-    ]
-
-    // update our chart
-    function update(step) {
-        steps[step].call()
+    function update(lat, lng, zoom) {
+        map.flyTo({
+            center: [
+                lat,
+                lng
+            ],
+            zoom: zoom
+        })
     }
 
-    return {
-        update: update,
-    }
-}
     mapboxgl.accessToken = 'pk.eyJ1Ijoic2V2ZW5kYXlzIiwiYSI6ImNqaHRhOTFvcjBibjYzd280YXJmcW1zODEifQ.UB4MJkUMxA-M41CKQdv_JQ';
     var map = new mapboxgl.Map({
         container: 'map', // container id
@@ -185,13 +177,24 @@
         center: [
             -73.213280,
             44.475864
-        ], // starting position [lng, lat]
+        ],
         zoom: 13, // starting zoom
         pitch: 45,
+        interactive: false
     });
     
-    map.scrollZoom.disable();
-
+    for (var key in points) {
+        var el = document.createElement("div");
+        el.className = 'marker';
+        var numberFill = '<div class="marker-number">';
+        numberFill += points[key].number;
+        numberFill += '</div>';
+        el.innerHTML += numberFill;
+        
+        new mapboxgl.Marker(el)
+            .setLngLat(points[key].coordinates)
+            .addTo(map)
+    }
     
     (function () {
 
@@ -205,13 +208,14 @@
             var viewportHeight = window.innerHeight
             var halfViewportHeight = Math.floor(viewportHeight / 2)
 
-            // a global function creates and handles all the vis + updates
-            var graphic = createGraphic()
-
             // callback function when scrollStory detects item to trigger
             var handleItemFocus = function (event, item) {
                 var step = item.data.step
-                graphic.update(step)
+                var slug = item.data.slug
+                var lat = points[slug].coordinates[0]
+                var lng = points[slug].coordinates[1]
+                var zoom = points[slug].zoom
+                update(lat, lng, zoom)
             }
 
             // instantiate scrollStory

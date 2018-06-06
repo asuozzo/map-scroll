@@ -5,6 +5,10 @@
     position: relative;
 }
 
+.trigger > h4 {
+    clear:none !important;
+}
+
 .scroll-text {
     width: 50%;
 }
@@ -32,6 +36,26 @@
 
 .library {
     width:100%;
+}
+
+.marker {
+    /* background-image: url('/general/multimedia/projects/map-scroll/marker.svg'); */
+    background-image: url('../marker.svg');
+    background-size: cover;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.marker-number {
+    color: #fff;
+    width: 100%;
+    font-weight: bold;
+    height: 100%;
+    font-size: 18px;
+    text-align: center;
+    line-height:45px;
 }
 
 @media only screen and (max-width: 600px) {
